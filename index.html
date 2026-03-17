@@ -257,13 +257,16 @@ section:not(.hero) {
 }
 
 /* ── Finder / Filter Section ── */
-.finder-section { background: var(--clr-white); padding-top: 0; }
+.finder-section {
+  background: var(--clr-grey-50);
+  padding: var(--space-xl) var(--space-lg);
+}
 .finder {
-  max-width: var(--max-w); margin: calc(-1 * var(--space-xl)) auto 0;
+  max-width: var(--max-w); margin: 0 auto;
   position: relative; z-index: 3;
   background: var(--clr-white); border-radius: var(--radius-lg);
   padding: var(--space-lg);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
   border: 1px solid var(--clr-grey-200);
 }
 .finder__title {
