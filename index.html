@@ -411,7 +411,10 @@ section:not(.hero) {
     padding-bottom: var(--space-sm);
     scrollbar-width: thin;
   }
-  .car-card { min-width: 85vw; scroll-snap-align: start; flex-shrink: 0; }
+  .car-card { width: 85vw; min-width: 85vw; max-width: 85vw; scroll-snap-align: start; flex-shrink: 0; }
+  .car-card .car-card__img img { width: 100%; height: 100%; object-fit: cover; }
+  /* Cards in horizontal scroll: always visible (observer can't detect them) */
+  .cars-grid .reveal { opacity: 1; transform: none; }
 }
 
 /* ── About / Über uns ── */
