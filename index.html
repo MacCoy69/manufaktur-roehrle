@@ -406,6 +406,47 @@ section:not(.hero) {
 
 /* Mobile horizontal scroll */
 @media (max-width: 767px) {
+  .cars-scroll-wrap {
+    position: relative;
+  }
+  .cars-scroll-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 48px;
+    background: linear-gradient(to right, rgba(247,247,248,0), rgba(247,247,248,0.95) 70%);
+    z-index: 5;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .cars-scroll-wrap--scrolled::after {
+    opacity: 0;
+  }
+  .cars-scroll-hint {
+    position: absolute;
+    top: 50%; right: 8px;
+    transform: translateY(-50%);
+    z-index: 6;
+    width: 36px; height: 36px;
+    background: var(--clr-red);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow-md);
+    pointer-events: none;
+    animation: scrollHintPulse 1.8s ease-in-out infinite;
+    transition: opacity 0.4s ease;
+  }
+  .cars-scroll-hint svg {
+    width: 18px; height: 18px;
+    fill: none; stroke: #fff; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .cars-scroll-wrap--scrolled .cars-scroll-hint {
+    opacity: 0;
+  }
+  @keyframes scrollHintPulse {
+    0%, 100% { transform: translateY(-50%) translateX(0); }
+    50% { transform: translateY(-50%) translateX(4px); }
+  }
   .cars-grid {
     grid-template-columns: 1fr;
     display: flex; gap: var(--space-md);
@@ -418,6 +459,9 @@ section:not(.hero) {
   .car-card .car-card__img img { width: 100%; height: 100%; object-fit: cover; }
   /* Cards in horizontal scroll: always visible (observer can't detect them) */
   .cars-grid .reveal { opacity: 1; transform: none; }
+}
+@media (min-width: 768px) {
+  .cars-scroll-hint { display: none; }
 }
 
 /* ── About / Über uns ── */
@@ -913,7 +957,9 @@ section:not(.hero) {
       <button class="filter-tab" role="tab" aria-selected="false">Oldtimer</button>
     </div>
 
-    <div class="cars-grid">
+    <div class="cars-scroll-wrap" id="carsScrollWrap">
+      <span class="cars-scroll-hint" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></span>
+    <div class="cars-grid" id="carsGrid">
       <article class="car-card reveal reveal-delay-1">
         <div class="car-card__img">
           <div class="car-card__placeholder" aria-hidden="true">
@@ -982,6 +1028,7 @@ section:not(.hero) {
           </div>
         </div>
       </article>
+    </div>
     </div>
   </div>
 </section>
@@ -1309,6 +1356,17 @@ section:not(.hero) {
     requestIdleCallback(initObserver);
   } else {
     window.addEventListener('load', initObserver);
+  }
+
+  /* ── Scroll hint for car cards on mobile ── */
+  var carsGrid = document.getElementById('carsGrid');
+  var carsWrap = document.getElementById('carsScrollWrap');
+  if (carsGrid && carsWrap) {
+    carsGrid.addEventListener('scroll', function() {
+      if (carsGrid.scrollLeft > 30) {
+        carsWrap.classList.add('cars-scroll-wrap--scrolled');
+      }
+    }, { passive: true });
   }
 
 })();
