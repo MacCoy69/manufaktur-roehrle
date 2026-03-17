@@ -590,24 +590,36 @@ section:not(.hero) {
   .about__img { max-height: 400px; }
 }
 
+/* Mobile nav overlay backdrop */
+.nav__overlay {
+  display: none; position: fixed; inset: 0; z-index: 1001;
+  background: rgba(0,0,0,0.5);
+  opacity: 0; transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.nav__overlay--visible { display: block; opacity: 1; pointer-events: auto; }
+
 @media (max-width: 767px) {
+  .nav { contain: none; }
   .nav__links {
     position: fixed; top: 0; right: 0; bottom: 0;
     width: 280px; max-width: 80vw;
     background: var(--clr-white);
     flex-direction: column; padding: 80px var(--space-lg) var(--space-lg);
     gap: var(--space-sm);
-    transform: translateX(100%); opacity: 0;
-    transition: transform 0.35s ease, opacity 0.35s ease;
-    box-shadow: -4px 0 30px rgba(0,0,0,0.1);
+    transform: translateX(100%);
+    transition: transform 0.35s ease;
+    box-shadow: -4px 0 30px rgba(0,0,0,0.2);
+    z-index: 1002;
   }
-  .nav__links--open { transform: translateX(0); opacity: 1; }
+  .nav__links--open { transform: translateX(0); }
   .nav__links a {
     font-size: var(--fs-base); padding: var(--space-sm) 0;
     border-bottom: 1px solid var(--clr-grey-200);
     color: var(--clr-grey-700) !important;
+    opacity: 1 !important;
   }
-  .burger { display: flex; }
+  .burger { display: flex; z-index: 1003; position: relative; }
   .finder { margin-left: var(--space-lg); margin-right: var(--space-lg); }
   .finder__grid { grid-template-columns: 1fr; }
   .footer__grid { grid-template-columns: 1fr; }
@@ -778,6 +790,7 @@ section:not(.hero) {
     </button>
   </div>
 </nav>
+<div class="nav__overlay" id="navOverlay" aria-hidden="true"></div>
 
 <!-- Main Content -->
 <main id="main">
@@ -1198,21 +1211,34 @@ section:not(.hero) {
   /* ── Burger Menu ── */
   var burger = document.getElementById('burger');
   var navLinks = document.getElementById('navLinks');
+  var navOverlay = document.getElementById('navOverlay');
+
+  function closeMenu() {
+    burger.setAttribute('aria-expanded', 'false');
+    burger.setAttribute('aria-label', 'Menü öffnen');
+    navLinks.classList.remove('nav__links--open');
+    navOverlay.classList.remove('nav__overlay--visible');
+    navOverlay.setAttribute('aria-hidden', 'true');
+  }
+
+  function openMenu() {
+    burger.setAttribute('aria-expanded', 'true');
+    burger.setAttribute('aria-label', 'Menü schließen');
+    navLinks.classList.add('nav__links--open');
+    navOverlay.classList.add('nav__overlay--visible');
+    navOverlay.setAttribute('aria-hidden', 'false');
+  }
 
   burger.addEventListener('click', function() {
     var expanded = burger.getAttribute('aria-expanded') === 'true';
-    burger.setAttribute('aria-expanded', String(!expanded));
-    burger.setAttribute('aria-label', expanded ? 'Menü öffnen' : 'Menü schließen');
-    navLinks.classList.toggle('nav__links--open');
+    if (expanded) { closeMenu(); } else { openMenu(); }
   });
+
+  navOverlay.addEventListener('click', closeMenu);
 
   var links = navLinks.querySelectorAll('a');
   for (var i = 0; i < links.length; i++) {
-    links[i].addEventListener('click', function() {
-      burger.setAttribute('aria-expanded', 'false');
-      burger.setAttribute('aria-label', 'Menü öffnen');
-      navLinks.classList.remove('nav__links--open');
-    });
+    links[i].addEventListener('click', closeMenu);
   }
 
   /* ── FAQ Accordion ── */
