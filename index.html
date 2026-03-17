@@ -781,17 +781,10 @@ section:not(.hero) {
 
 <!-- Hero with Video -->
 <section class="hero">
-  <div class="hero__video-wrap" aria-hidden="true">
-    <!--
-      VIDEO EINBINDEN:
-      Ersetze das <div class="hero__video-poster"> mit:
-      <video class="hero__video" autoplay muted loop playsinline preload="none" poster="poster.jpg">
-        <source src="hero-video.mp4" type="video/mp4">
-      </video>
-    -->
-    <div class="hero__video-poster">
-      <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.3"><rect x="1" y="5" width="22" height="14" rx="3"/><circle cx="7" cy="19" r="2"/><circle cx="17" cy="19" r="2"/><path d="M1 15h22"/></svg>
-    </div>
+  <div class="hero__video-wrap" aria-hidden="false">
+    <video class="hero__video" autoplay muted loop playsinline preload="auto" poster="images/hero-video-poster.jpg">
+      <source src="videos/hero-video.mp4" type="video/mp4">
+    </video>
   </div>
   <div class="hero__overlay" aria-hidden="true"></div>
   <div class="hero__content">
@@ -928,21 +921,21 @@ section:not(.hero) {
       <article class="car-card reveal reveal-delay-2">
         <div class="car-card__img">
           <div class="car-card__placeholder" aria-hidden="true">
-            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.5"><rect x="1" y="6" width="22" height="12" rx="3"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+            <img src="images/mb-w124-250td.jpg" alt="Mercedes-Benz W124 E250td Limousine" width="400" height="225" loading="lazy" style="width:100%;height:100%;object-fit:cover">
           </div>
-          <span class="car-card__badge">Restauriert</span>
+          <span class="car-card__badge">neu lackiert</span>
         </div>
         <div class="car-card__body">
-          <div class="car-card__meta"><span>1994</span><span>·</span><span>89.000 km</span></div>
-          <h3>Mercedes-Benz W124 E320 Coupé</h3>
+          <div class="car-card__meta"><span>1990</span><span>·</span><span>142.000 km</span></div>
+          <h3>Mercedes-Benz W124 E250td Limousine</h3>
           <div class="car-card__specs">
-            <span class="car-card__spec">3.2L R6</span>
-            <span class="car-card__spec">220 PS</span>
-            <span class="car-card__spec">Automatik</span>
-            <span class="car-card__spec">Brillantsilber</span>
+            <span class="car-card__spec">2.5L R4</span>
+            <span class="car-card__spec">136 PS</span>
+            <span class="car-card__spec">Schaltgetriebe</span>
+            <span class="car-card__spec">Weiß</span>
           </div>
           <div class="car-card__footer">
-            <span class="car-card__price">42.900 €</span>
+            <span class="car-card__price">VB 12.000 €</span>
             <a href="#kontakt" class="car-card__link">Anfragen <span aria-hidden="true">→</span></a>
           </div>
         </div>
@@ -978,8 +971,8 @@ section:not(.hero) {
 <section class="section about" id="ueber-uns">
   <div class="section__inner">
     <div class="about__grid">
-      <div class="about__img reveal" aria-hidden="true">
-        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.3"><rect x="1" y="5" width="22" height="14" rx="3"/><circle cx="7" cy="19" r="2"/><circle cx="17" cy="19" r="2"/><path d="M1 15h22"/></svg>
+      <div class="about__img reveal">
+        <img src="images/logo_roehrle.jpg" alt="Manufaktur Röhrle – Logo" width="600" height="338" loading="lazy" style="width:100%;height:100%;object-fit:contain;padding:var(--space-lg);background:var(--clr-white)">
       </div>
       <div class="about__content">
         <span class="section__tag reveal">Über uns</span>
